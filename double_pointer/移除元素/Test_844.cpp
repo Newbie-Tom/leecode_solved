@@ -9,7 +9,7 @@ public:
     bool backspaceCompare(string s, string t) {
         int skipS=0,skipT=0;
         int fastS=s.size()-1,fastT=t.size()-1;
-        while (fastS>=0&&fastT>=0)
+        while (fastS>=0||fastT>=0)
         {
                 while (fastS>=0)
                 {
