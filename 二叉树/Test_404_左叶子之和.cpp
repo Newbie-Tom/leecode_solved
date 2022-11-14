@@ -16,7 +16,7 @@ struct TreeNode
 };
 
 
-
+//递归法
 class Solution {
 public:
     
@@ -32,5 +32,30 @@ public:
         int rightVal = sumOfLeftLeaves(root->right);
 
         return leftVal+rightVal;
+    }
+};
+
+//迭代法
+class Solution {
+public:
+    
+    
+    int sumOfLeftLeaves(TreeNode* root) {
+        stack<TreeNode *> st;
+        if(root==NULL)
+            return 0;
+        st.push(root);
+        int leftval=0;
+        while (!st.empty())
+        {
+            TreeNode *cur = st.top();
+            st.pop();
+            if(cur->left&&cur->left->left==NULL&&cur->left->right==NULL)
+                leftval+=cur->left->val;
+            if(cur->right) st.push(cur->right);    
+            if(cur->left) st.push(cur->left);
+            
+        }
+        return leftval;
     }
 };
