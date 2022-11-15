@@ -34,8 +34,7 @@ public:
 };
 //后序(左右根)
 class Solution {
-public:
-    
+public:   
     vector<int> postorderTraversal(TreeNode* root) {
         vector<int> result;
         stack<TreeNode*> st;
@@ -48,10 +47,35 @@ public:
             result.push_back(cur->val);   
             if(cur->left) st.push(cur->left);   //左  
             if(cur->right) st.push(cur->right); //右
-              
-              
         }
         reverse(result.begin(),result.end());
+        return result;
+    }
+};
+
+//中序
+class Solution {
+public:
+    vector<int> inorderTraversal(TreeNode* root) {
+        vector<int> result;
+        stack<TreeNode*> st;
+        if(root==NULL) return result;
+        TreeNode *cur = root;
+        while (cur!=NULL||!st.empty())
+        {
+            if(cur!=NULL)
+            {
+                st.push(cur);
+                cur = cur->left;
+            }
+            else{
+                //此时cur为空,得先弹栈再入vector
+                cur = st.top(); 
+                st.pop();
+                result.push_back(cur->val);
+                cur = cur->right;
+            }
+        }
         return result;
     }
 };

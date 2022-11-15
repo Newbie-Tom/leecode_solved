@@ -47,11 +47,20 @@ class Solution {
 public:
     void order(TreeNode *cur,vector<vector<int>> &result,int depth)
     {
-        
+        //终止条件
+        if(cur==NULL) return ;
+        if(result.size()==depth) result.push_back(vector<int> ());
+        //添加根节点
+        result[depth].push_back(cur->val);
+        //左子节点
+        order(cur->left,result,depth+1);
+        //右子节点
+        order(cur->right,result,depth+1);
     }
     vector<vector<int>> levelOrder(TreeNode* root) {
         vector<vector<int>> result;
-        
-        
+        int depth=0;
+        order(root,result,depth);
+        return result;
     }
 };

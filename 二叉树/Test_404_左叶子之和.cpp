@@ -38,8 +38,6 @@ public:
 //迭代法
 class Solution {
 public:
-    
-    
     int sumOfLeftLeaves(TreeNode* root) {
         stack<TreeNode *> st;
         if(root==NULL)
@@ -54,7 +52,6 @@ public:
                 leftval+=cur->left->val;
             if(cur->right) st.push(cur->right);    
             if(cur->left) st.push(cur->left);
-            
         }
         return leftval;
     }
