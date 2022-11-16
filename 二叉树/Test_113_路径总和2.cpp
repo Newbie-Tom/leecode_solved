@@ -30,7 +30,7 @@ public:
             return ;
         if(cur->left)
         {
-            path.push_back(cur->left);
+            path.push_back(cur->left->val);
             count -=cur->left->val;
             travelNode(cur->left,count);
             count += cur->left->val;
@@ -38,7 +38,7 @@ public:
         }
         if(cur->right)
         {
-            path.push_back(cur->right);
+            path.push_back(cur->right->val);
             count -=cur->right->val;
             travelNode(cur->right,count);
             count += cur->right->val;
