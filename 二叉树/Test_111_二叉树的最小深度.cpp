@@ -36,7 +36,7 @@ public:
 };
 
 
-//层序
+//递归 前序
 class Solution {
 public:
         int result;

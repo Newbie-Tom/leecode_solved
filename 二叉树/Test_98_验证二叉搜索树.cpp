@@ -42,19 +42,49 @@ public:
 //递归2
 class Solution {
 public:
-       int maxVal = INT64_MIN;
+       TreeNode *pre = NULL;
         bool isValidBST(TreeNode* root) 
         {
                 if(root==NULL)
                         return true;
                 bool left = isValidBST(root->left);
-                if(maxVal<root->val)
-                         maxVal = root->val;
-                else 
+                if(pre!=NULL&&pre->val>=root->val)
                         return false;
+                else 
+                        pre = root;
                 bool right = isValidBST(root->right);
-
-                return left&right;
+                return left&&right;
         }
 };
 
+
+//迭代
+class Solution {
+public:
+       
+        bool isValidBST(TreeNode* root) 
+        {
+                if(root==NULL)
+                        return true;
+                stack<TreeNode *>st;
+                TreeNode *cur = root;
+                TreeNode *pre = NULL;
+                while (cur!=NULL||!st.empty())
+                {
+                        if(cur!=NULL)
+                        {
+                                st.push(cur);
+                                cur=cur->left;
+                        }
+                        else{
+                                cur = st.top();
+                                st.pop();
+                                if(pre!=NULL&&pre->val>=cur->val)
+                                        return false;
+                                pre = cur;
+                                cur = cur->right;
+                        }
+                }
+                return true;
+        }
+};

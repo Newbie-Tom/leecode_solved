@@ -57,10 +57,37 @@ public:
                 TravelNode(cur->right);
         }
         int getMinimumDifference(TreeNode* root) {
-                
-                
-                
+                TravelNode(root);
+                return minVal;
+        }
+};
 
+//迭代
+class Solution {
+public:
+        
+        int getMinimumDifference(TreeNode* root) {
+                TreeNode *pre=NULL;
+                int minVal=INT32_MAX;
+                stack<TreeNode*>st;
+                TreeNode *cur = root;
+                while (cur!=NULL||!st.empty())
+                {
+                        if(cur!=NULL)
+                        {
+                                st.push(cur);
+                                cur = cur->left;
+                        }
+                        else
+                        {
+                                cur  = st.top();
+                                st.pop();
+                                if(pre!=NULL)
+                                        minVal = min(minVal,cur->val-pre->val);
+                                pre = cur;
+                                cur = cur->right;
+                        }
+                }
                 return minVal;
         }
 };
