@@ -14,7 +14,7 @@ struct TreeNode
     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
-
+//不考虑二叉搜索树的性质
 class Solution {
 public:
         void  TravelNode(TreeNode*cur,unordered_map<int,int>&map)
@@ -49,6 +49,104 @@ public:
 
         }
 };
+
+//考虑二叉搜索树的性质
+class Solution {
+public:
+        int maxCount=0;
+        int count=0;
+        TreeNode *pre =NULL;
+        vector<int>res;
+
+        void  TravelNode(TreeNode*cur)
+        {
+                if(cur==NULL)
+                        return ;
+                TravelNode(cur->left);
+                
+                if(pre==NULL)   //第一个节点
+                        count=1;
+                else if(pre->val==cur->val)
+                        count++;
+                else
+                        count=1;
+                
+                pre=cur;        //更新上一个节点
+
+                if(count==maxCount)
+                        res.push_back(cur->val);
+
+                if(count>maxCount)
+                {
+                        maxCount = count;
+                        res.clear();
+                        res.push_back(cur->val);
+                }
+
+                TravelNode(cur->right);
+        }
+        
+        vector<int> findMode(TreeNode* root) {
+                count=0;
+                maxCount=0;
+                TreeNode *pre=NULL;
+                res.clear();
+                TravelNode(root);
+                return res;
+        }
+};
+
+//考虑二叉搜索树的性质
+//迭代
+class Solution {
+public:
+        int maxCount=0;
+        int count=0;
+        TreeNode *pre =NULL;
+        vector<int>res;
+        vector<int> findMode(TreeNode* root) {
+                count=0;
+                maxCount=0;
+                TreeNode *pre=NULL;
+                res.clear();
+                if(root==NULL)
+                        return res;
+                stack<TreeNode *>st;
+                TreeNode *cur = root;
+                while (cur!=NULL||!st.empty())
+                {
+                        if(cur!=NULL)
+                        {
+                                st.push(cur);
+                                cur = cur->left;
+                        }
+                        else
+                        {
+                                cur=st.top();
+                                st.pop();
+                                if(pre==NULL)
+                                        count=1;
+                                else if(pre->val==cur->val)
+                                        count++;
+                                else
+                                        count=1;
+                                pre = cur;
+
+                                if(count==maxCount)
+                                        res.push_back(cur->val);
+                                if(count>maxCount)
+                                {
+                                        maxCount=count;
+                                        res.clear();
+                                        res.push_back(cur->val);
+                                }
+                                cur = cur->right;
+                        }
+                }
+                return res;
+        }
+};
+
 
 int main(int argc, const char** argv) {
         Solution so;
