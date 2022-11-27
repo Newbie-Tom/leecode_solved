@@ -20,24 +20,33 @@ struct TreeNode
 class Solution {
 public:
         TreeNode* insertIntoBST(TreeNode* root, int val) {
-                while (root)
+                if(root==NULL)
                 {
-                        if(root->val<val){
-                                if(root->right)
-                                        root = root->right;
+                        TreeNode *node = new TreeNode(val);
+                        return node;
+                }
+                TreeNode *cur = root;
+
+                while (cur)
+                {
+                        if(cur->val<val){
+                                if(cur->right)
+                                        cur = cur->right;
                                 else
                                 {
                                         TreeNode *node = new TreeNode(val);
-                                        root->right = node;
+                                        cur->right = node;
+                                        break;
                                 }
                         }                
-                        else if(root->val>=val){
-                                if(root->left)
-                                      root =root->left;  
+                        else if(cur->val>=val){
+                                if(cur->left)
+                                      cur=cur->left;  
                                 else
                                 {
                                         TreeNode *node = new TreeNode(val);
-                                        root->left = node;        
+                                        cur->left = node; 
+                                        break;       
                                 }
                         }
                 }
@@ -46,17 +55,48 @@ public:
 };
 
 
-int main()
-{
-        Solution so;
-        TreeNode *root  = new TreeNode(4);
-        root->left = new TreeNode(2);
-        root->right = new TreeNode(7);
-        root->left->left = new TreeNode(1);
-        root->left->right = new TreeNode(3);
-        int val = 5;
-        so.insertIntoBST(root,5);
+//递归
+class Solution {
+public:
 
-        return 0;
+        TreeNode* insertIntoBST(TreeNode* root, int val) {
+                if(root==NULL)
+                {
+                        TreeNode *node = new TreeNode(val);
+                        return node;
+                }
+                
+                if(root->val>val) root->left = insertIntoBST(root->left,val);
+                if(root->val<val) root->right = insertIntoBST(root->right,val);
 
-}
+                return root;
+        }
+};
+//递归无返回值
+class Solution {
+public:
+        TreeNode *parent;
+        void TravelNode(TreeNode *cur,int val)
+        {
+                if(cur==NULL)
+                {
+                        TreeNode *node = new TreeNode(val);
+                        if(parent->val<val)
+                                parent->right = node;
+                        else parent->left = node;
+                        return ;
+                }
+                parent = cur;
+                if(cur->val>val) TravelNode(cur->left,val);
+                if(cur->val<val) TravelNode(cur->right,val);
+        }
+        TreeNode* insertIntoBST(TreeNode* root, int val) {
+                parent = new TreeNode(0);
+                if(root==NULL)
+                {
+                        root = new TreeNode(val);                        
+                }
+                TravelNode(root,val);
+                return root;
+        }
+};
