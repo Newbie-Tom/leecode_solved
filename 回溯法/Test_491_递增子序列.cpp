@@ -22,7 +22,7 @@ public:
             /*
             *path路径非空
             *当前的数值比序列最后一个数值小
-            *无序集合set找不到此数值
+            *无序集合set找到了此数值
             */
             if((!path.empty()&&nums[i]<path.back())||(uSet.find(nums[i])!=uSet.end()))
             {
@@ -42,7 +42,7 @@ public:
         return res;
     }
 };
-
+//用数组的方法
 class Solution {
 public:
     vector<int>path;
