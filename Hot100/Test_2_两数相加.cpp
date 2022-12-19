@@ -61,19 +61,21 @@ public:
             {
                 int temp = sum%10;
                 ListNode *Node = new ListNode(temp);
-                l1Cur->next = Node;
+                tp->next = Node;
                 Node->next = NULL;
                 sum = sum/10;   
             }
             else
             {
-                l1Cur->val = sum;
+                ListNode *Node = new ListNode(sum);
+                tp->next = Node;
+                Node->next = NULL;
                 sum=0;
             }
             l2Cur = l2Cur->next;
             tp = tp->next;
         }
-        if(sum!=0)
+        if(sum!= 0)
         {
             ListNode *node = new ListNode(sum);
             tp->next = node;
