@@ -44,9 +44,47 @@ public:
     }
 };
 
-int main()
-{
-    Solution so;
-    vector<int>bills = {5,5,10,20,5,5,5,5,5,5,5,5,5,10,5,5,20,5,20,5};
-    cout<<so.lemonadeChange(bills)<<endl;
-}
+
+class Solution {
+public:
+    bool lemonadeChange(vector<int>& bills) {
+        //捷径条件,由于没有零钱,开头两个订单有一定的范围
+        if(bills[0]>5||bills[1]>10)
+            return false;
+        int five=0,ten = 0,twenty = 0;
+        int change = 0;
+        for(int i=0;i<bills.size();i++)
+        {
+            if(bills[i]==5)
+                five++;
+            if(bills[i]>5)      //当需要找零时
+            {
+                change = bills[i]-5;
+                if(change==15)
+                {
+                    twenty++;
+                    if(ten>0)
+                    {
+                        ten--;
+                        five--;
+                    }
+                    else
+                    {
+                        five-=3;
+                    }
+                    if(ten<0||five<0)
+                        return false;
+                }
+                if(change==5)
+                {
+                    ten++;
+                    five--;
+                    if(five<0)
+                        return false;
+                }
+            }
+        }
+        return true;
+    }
+};
+
