@@ -35,11 +35,3 @@ public:
                 return nums[nums.size()/2];
         }
 };
-
-
-int main()
-{
-        vector<int> nums ={3,2,3};
-        Solution so;
-        cout<<so.majorityElement(nums)<<endl;
-}
